@@ -32,12 +32,13 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/${{ github.repository_owner }}/s2i-nginx:latest
       
-      - name: Install S2I
-        run: |
-          curl -sSL https://github.com/openshift/source-to-image/releases/download/v1.3.1/source-to-image-v1.3.1-a5a77147-linux-amd64.tar.gz | tar xvz -C /tmp
-          sudo mv /tmp/s2i /usr/local/bin
-      
-      - name: Build and push S2I image
-        run: |
-          s2i build ./dist ghcr.io/${{ github.repository_owner }}/s2i-nginx:latest ghcr.io/${{ github.repository_owner }}/lp-idphotobook:latest
-          docker push ghcr.io/${{ github.repository_owner }}/lp-idphotobook:latest
+      # Setup S2i and Build container image
+      - name: Setup and Build
+        id: build_image
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: './dist'
+          # Builder image for a java project
+          builder_image: 'ghcr.io/${{ github.repository_owner }}/s2i-nginx:latest'
+          image: ghcr.io/${{ github.repository_owner }}/lp-idphotobook
+          tags: latest
