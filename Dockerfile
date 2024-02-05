@@ -11,5 +11,7 @@ RUN apk add --no-cache curl \
 # Copy the S2I scripts to /usr/libexec/s2i
 COPY ./s2i/bin /usr/libexec/s2i
 
+RUN chmod +x /usr/libexec/s2i/*
+
 # Set the S2I scripts as the image entrypoint
 ENTRYPOINT ["/usr/libexec/s2i/usage"]
