@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "This is an S2I builder image for Nginx. To use it, run 's2i build'."
