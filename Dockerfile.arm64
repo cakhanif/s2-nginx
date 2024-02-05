@@ -1,0 +1,17 @@
+# Start from the official Nginx image
+FROM nginx:alpine
+
+LABEL io.openshift.s2i.scripts-url=image:///usr/libexec/s2i
+
+# Install S2I
+RUN apk add --no-cache curl \
+    && curl -L https://github.com/openshift/source-to-image/releases/download/v1.3.9/source-to-image-v1.3.9-574a2640-linux-arm64.tar.gz | tar -xz \
+    && mv s2i /usr/local/bin
+
+# Copy the S2I scripts to /usr/libexec/s2i
+COPY ./s2i/bin /usr/libexec/s2i
+
+RUN chmod +x /usr/libexec/s2i/*
+
+# Set the S2I scripts as the image entrypoint
+ENTRYPOINT ["/usr/libexec/s2i/usage"]

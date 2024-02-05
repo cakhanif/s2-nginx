@@ -23,10 +23,21 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image - AMD64
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./Dockerfile.amd64
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          tags: ghcr.io/${{ github.repository_owner }}/s2i-nginx:latest
+
+      
+      - name: Build and push Docker image - ARM64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile.arm64
+          push: true
+          platforms: linux/arm64
           tags: ghcr.io/${{ github.repository_owner }}/s2i-nginx:latest
