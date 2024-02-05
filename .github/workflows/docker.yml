@@ -39,6 +39,6 @@ jobs:
         with:
           path_context: './dist'
           # Builder image for a java project
-          builder_image: 'ghcr.io/${{ github.repository_owner }}/s2i-nginx:latest'
+          builder_image: 'centos/nginx-112-centos7:1.12'
           image: ghcr.io/${{ github.repository_owner }}/lp-idphotobook
           tags: latest
